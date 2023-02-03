@@ -1,6 +1,5 @@
 
-import java.util.Objects;
-
+import java.util.ArrayList;
 public class NumberConverter {
     final String CHAR_DATA = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz+/";
     int[] digits;
@@ -31,24 +30,26 @@ public class NumberConverter {
     }
 
     public String[] convertToBase(int baseTwo) {
-        int[] newArray = new int[(int) ((double) digits.length * base / baseTwo + 0.5 + 1)];
-        System.out.println(newArray.length);
-        for(int i = 0; i < digits.length; i++) {
-            int index = newArray.length - 1;
-            newArray[index] += digits[digits.length - i - 1] * Math.pow(base, i);
-            while(newArray[index] > baseTwo) {
-                index --;
-                newArray[index] += (newArray[index + 1] - newArray[index + 1] % baseTwo) / baseTwo;
-                newArray[index + 1] %= baseTwo;
-            }
-
+        ArrayList<Integer> newArray = new ArrayList<Integer>();
+        int sum = 0;
+        for (int i = 0; i < digits.length; i++) {
+            sum += digits[i] * (Math.pow(10, digits.length - i - 1));
+        }
+        newArray.add(sum);
+        System.out.println("Base: " + baseTwo + ", Sum: " + sum);
+        while(sum > 0) {
+            newArray.add(0, sum / baseTwo);
+            sum /= baseTwo;
+            newArray.set(1, newArray.get(1) % baseTwo);
+            //System.out.println(newArray);
+            //System.out.println(newArray.size());
         }
         return baseChars(newArray);
     }
-    public String[] baseChars(int[] array) {
-        String[] newArray = new String[array.length];
-        for(int i = 0; i < array.length; i++) {
-            newArray[i] = CHAR_DATA.substring(array[i], array[i] + 1);
+    public String[] baseChars(ArrayList<Integer> array) {
+        String[] newArray = new String[array.size()];
+        for(int i = 0; i < array.size(); i++) {
+            newArray[i] = CHAR_DATA.substring(array.get(i), array.get(i) + 1);
         }
         return newArray;
     }
