@@ -13,26 +13,35 @@ class ConverterRunner {
 
         System.out.print("Enter your number: ");
         String number = s.nextLine();
+        boolean validNum = true;
+        for(int i = 0; i < number.length(); i++) {
+            if(Integer.parseInt(number.substring(i, i+ 1)) >= base) {
+                validNum = false;
+            }
+        }
         int n = Integer.parseInt(number);
 
         s.close();
-
-        NumberConverter nc = new NumberConverter(n, base);
-        int[] digits = nc.getDigits();
-        System.out.println("\n\nDigit array: " + Arrays.toString(digits));
-        System.out.println("Number: " + nc.displayOriginalNumber());
-        if(base == 10) {
-            System.out.println(Arrays.toString(nc.convertToBase(2)));
-            System.out.println(Arrays.toString(nc.convertToBase(8)));
-            System.out.println(Arrays.toString(nc.convertToBase(16)));
-        } else if(base == 2) {
-            System.out.println(Arrays.toString(nc.convertToBase(8)));
-            System.out.println(Arrays.toString(nc.convertToBase(10)));
-            System.out.println(Arrays.toString(nc.convertToBase(16)));
+        if(validNum) {
+            NumberConverter nc = new NumberConverter(n, base);
+            int[] digits = nc.getDigits();
+            System.out.println("\n\nDigit array: " + Arrays.toString(digits));
+            System.out.println("Number: " + nc.displayOriginalNumber());
+            if(base == 10) {
+                System.out.println(Arrays.toString(nc.convertToBase(2)));
+                System.out.println(Arrays.toString(nc.convertToBase(8)));
+                System.out.println(Arrays.toString(nc.convertToBase(16)));
+            } else if(base == 2) {
+                System.out.println(Arrays.toString(nc.convertToBase(8)));
+                System.out.println(Arrays.toString(nc.convertToBase(10)));
+                System.out.println(Arrays.toString(nc.convertToBase(16)));
+            } else {
+                System.out.println(Arrays.toString(nc.convertToBase(2)));
+                System.out.println(Arrays.toString(nc.convertToBase(10)));
+                System.out.println(Arrays.toString(nc.convertToBase(16)));
+            }
         } else {
-            System.out.println(Arrays.toString(nc.convertToBase(2)));
-            System.out.println(Arrays.toString(nc.convertToBase(10)));
-            System.out.println(Arrays.toString(nc.convertToBase(16)));
+            System.out.println("Your number must not have a digit greater than the base - 1.");
         }
     }
 }

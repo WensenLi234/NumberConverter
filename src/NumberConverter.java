@@ -37,7 +37,7 @@ public class NumberConverter {
         }
         newArray.add(sum);
         System.out.println("Base: " + baseTwo + ", Sum: " + sum);
-        while(sum > 0) {
+        while(sum > sum % baseTwo) {
             newArray.add(0, sum / baseTwo);
             sum /= baseTwo;
             newArray.set(1, newArray.get(1) % baseTwo);
